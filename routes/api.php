@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,9 @@ Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
 });
 
 // Notification
-Route::middleware('auth:sanctum')->prefix('/task')->group(function () {
-
+Route::middleware('auth:sanctum')->prefix('/notification')->group(function () {
+    Route::post('/send', [NotificationController::class, 'send']);
+    Route::post('/{notifId}/mark-as-seen', [NotificationController::class, 'markAsSeen']);
 });
 
 // Task
@@ -30,7 +32,7 @@ Route::middleware('auth:sanctum')->prefix('/task')->group(function () {
 });
 
 // SubTask
-Route::middleware('auth:sanctum')->prefix('/task')->group(function () {
+Route::middleware('auth:sanctum')->prefix('/sub-task')->group(function () {
 
 });
 

@@ -7,7 +7,6 @@ use App\Http\Requests\ChangePassRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use function App\Helpers\successResponse;
 
 class UserController extends Controller
 {

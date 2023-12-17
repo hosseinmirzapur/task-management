@@ -1,8 +1,5 @@
 <?php
 
-namespace App\Helpers;
-
-
 use Illuminate\Http\JsonResponse;
 
 if (!function_exists('successResponse')) {
