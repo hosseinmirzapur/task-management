@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateUserRequest extends FormRequest
+class ChangePassRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +23,9 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', Rule::unique('users', 'username')]
+            'old' => 'required',
+            'new' => 'required',
+            'confirm' => 'required|same:new',
         ];
     }
-
 }

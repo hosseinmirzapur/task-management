@@ -16,6 +16,7 @@ Route::prefix('/auth')->group(function () {
 Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
     Route::get('/info', [UserController::class, 'info']);
     Route::patch('/', [UserController::class, 'update']);
+    Route::patch('/change-pass', [UserController::class, 'changePass']);
 });
 
 // Notification

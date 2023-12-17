@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CustomException;
+use App\Http\Requests\ChangePassRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -21,8 +23,25 @@ class UserController extends Controller
         return successResponse($this->service->info());
     }
 
-    public function update(UpdateUserRequest $request)
+    /**
+     * @param UpdateUserRequest $request
+     * @return JsonResponse
+     */
+    public function update(UpdateUserRequest $request): JsonResponse
     {
         $data = $request->validated();
+        return successResponse($this->service->update($data['username']));
+    }
+
+    /**
+     * @param ChangePassRequest $request
+     * @return JsonResponse
+     * @throws CustomException
+     */
+    public function changePass(ChangePassRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $this->service->changePass($data['old'], $data['new']);
+        return successResponse(null, 'password updated successfully');
     }
 }
