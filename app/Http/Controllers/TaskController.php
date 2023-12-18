@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\CustomException;
+use App\Http\Requests\AssignUserToTaskRequest;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\OmitAssigneeRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Services\TaskService;
 use Illuminate\Http\JsonResponse;
@@ -45,5 +47,29 @@ class TaskController extends Controller
     {
         $this->service->delete($taskId);
         return successResponse(null, 'task deleted successfully');
+    }
+
+    /**
+     * @param AssignUserToTaskRequest $request
+     * @return JsonResponse
+     */
+    public function assignUser(AssignUserToTaskRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $this->service->assignUser($data['task_id'], $data['user_id']);
+        return successResponse(null, 'tasks assigned to user successfully');
+    }
+
+    /**
+     * @param OmitAssigneeRequest $request
+     * @param $userId
+     * @return JsonResponse
+     * @throws CustomException
+     */
+    public function omitAssignee(OmitAssigneeRequest $request, $userId): JsonResponse
+    {
+        $data = $request->validated();
+        $this->service->omitAssignee($data['task_id'], $userId);
+        return successResponse(null, 'user unassigned successfully');
     }
 }
