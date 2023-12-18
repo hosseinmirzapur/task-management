@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +25,14 @@ Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
 Route::middleware('auth:sanctum')->prefix('/notification')->group(function () {
     Route::post('/send', [NotificationController::class, 'send']);
     Route::post('/{notifId}/mark-as-seen', [NotificationController::class, 'markAsSeen']);
+    // todo: remember to include realtime notification feature
 });
 
 // Task
 Route::middleware('auth:sanctum')->prefix('/task')->group(function () {
-
+    Route::post('/', [TaskController::class, 'store']);
+    Route::patch('/{taskId}', [TaskController::class, 'update']);
+    Route::delete('/{taskId}', [TaskController::class, 'destroy']);
 });
 
 // SubTask
