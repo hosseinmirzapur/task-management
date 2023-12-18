@@ -35,3 +35,14 @@ if (!function_exists('saveFile')) {
         return $path . '/' . $filename;
     }
 }
+
+if (!function_exists('similarity')) {
+    /**
+     * @param mixed $query
+     * @return string
+     */
+    function similarity(mixed $query): string
+    {
+        return '%' . $query . '%';
+    }
+}

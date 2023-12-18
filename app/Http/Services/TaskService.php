@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TaskService
 {
@@ -77,5 +78,20 @@ class TaskService
             throw new CustomException('user does not exists', 404);
         }
         return $task->canceledAssignation($userId, $taskId);
+    }
+
+    /**
+     * @param $q
+     * @return AnonymousResourceCollection
+     */
+    public function search($q): AnonymousResourceCollection
+    {
+        $foundTasks = Task::query()
+            ->where('title', 'LIKE', similarity($q))
+            ->orWhere('category', 'LIKE', similarity($q))
+            ->orWhere('description', 'LIKE', similarity($q))
+            ->orWhere('priority', 'LIKE', similarity($q))
+            ->get();
+        return TaskResource::collection($foundTasks);
     }
 }

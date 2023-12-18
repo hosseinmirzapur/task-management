@@ -72,4 +72,13 @@ class TaskController extends Controller
         $this->service->omitAssignee($data['task_id'], $userId);
         return successResponse(null, 'user unassigned successfully');
     }
+
+    /**
+     * @param $q
+     * @return JsonResponse
+     */
+    public function search($q): JsonResponse
+    {
+        return successResponse($this->service->search($q));
+    }
 }

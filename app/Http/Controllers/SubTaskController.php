@@ -18,7 +18,7 @@ class SubTaskController extends Controller
      * @param SubTaskRequest $request
      * @return JsonResponse
      */
-    public function store(SubTaskRequest $request): \Illuminate\Http\JsonResponse
+    public function store(SubTaskRequest $request): JsonResponse
     {
         return successResponse(
             $this->service->create($request->validated())
@@ -47,5 +47,14 @@ class SubTaskController extends Controller
     {
         $this->service->delete($subtaskId);
         return successResponse(null, 'subtask deleted successfully');
+    }
+
+    /**
+     * @param $q
+     * @return JsonResponse
+     */
+    public function search($q): JsonResponse
+    {
+        return successResponse($this->service->search($q));
     }
 }

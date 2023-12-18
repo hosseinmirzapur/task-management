@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->prefix('/task')->group(function () {
     Route::delete('/{taskId}', [TaskController::class, 'destroy']);
     Route::post('/assign-user', [TaskController::class, 'assignUser']);
     Route::post('/omit-assignee/{userId}', [TaskController::class, 'omitAssignee']);
+    Route::get('/search/{q}', [TaskController::class, 'search']);
 });
 
 // SubTask
@@ -43,6 +44,7 @@ Route::middleware('auth:sanctum')->prefix('/subtask')->group(function () {
     Route::post('/', [SubTaskController::class, 'store']);
     Route::patch('/{subtaskId}', [SubTaskController::class, 'update']);
     Route::delete('/{subtaskId}', [SubTaskController::class, 'destroy']);
+    Route::get('/search/{q}', [SubTaskController::class, 'search']);
 
 });
 

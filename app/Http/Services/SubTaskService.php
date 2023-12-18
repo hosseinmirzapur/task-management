@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Http\Resources\SubTaskResource;
 use App\Models\SubTask;
 use App\Models\Task;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class SubTaskService
 {
@@ -49,5 +50,19 @@ class SubTaskService
             throw new CustomException('subtask not found', 404);
         }
         $subtask->delete();
+    }
+
+    /**
+     * @param $q
+     * @return AnonymousResourceCollection
+     */
+    public function search($q): AnonymousResourceCollection
+    {
+        $foundSubTasks = SubTask::query()
+            ->where('title', 'LIKE', similarity($q))
+            ->orWhere('status', 'LIKE', similarity($q))
+            ->orWhere('deadline', 'LIKE', similarity($q))
+            ->get();
+        return SubTaskResource::collection($foundSubTasks);
     }
 }
