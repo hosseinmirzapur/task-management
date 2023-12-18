@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SubTaskController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,10 @@ Route::middleware('auth:sanctum')->prefix('/task')->group(function () {
 });
 
 // SubTask
-Route::middleware('auth:sanctum')->prefix('/sub-task')->group(function () {
+Route::middleware('auth:sanctum')->prefix('/subtask')->group(function () {
+    Route::post('/', [SubTaskController::class, 'store']);
+    Route::patch('/{subtaskId}', [SubTaskController::class, 'update']);
+    Route::delete('/{subtaskId}', [SubTaskController::class, 'destroy']);
 
 });
 
